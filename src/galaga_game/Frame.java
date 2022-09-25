@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 public class Frame extends JFrame{
 	
 	Frame(){
+		this.setTitle("Galaga Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setResizable(false);
