@@ -17,9 +17,12 @@ public class Frame extends JFrame{
 	JLabel enemy2Label;
 	JLabel enemy3Label;
 	
+	RoundedPanel bulletRoundPanel;
+	
 	//Define the actionsmap
 	LeftAction leftAction;
 	RightAction rightAction;
+	UpAction upAction;
 	
 	Frame(){
 		ImageIcon fighterIcon = new ImageIcon("images/fighter.png");
@@ -46,8 +49,14 @@ public class Frame extends JFrame{
 		enemy3Label.setIcon(enemy3Icon);
 		enemy3Label.setBounds(350, -180, 150, 85);
 		
+		//BULLETS
+		bulletRoundPanel = new RoundedPanel(null, 15, Color.RED);
+		bulletRoundPanel.setBounds(465, 400, 20, 20);
+		bulletRoundPanel.setOpaque(false);
+		
 		
 		// Creating key bindings for moving the shooter/fighter
+		upAction = new UpAction();
 		leftAction = new LeftAction();
 		rightAction = new RightAction();
 		
@@ -56,10 +65,14 @@ public class Frame extends JFrame{
 		fighterLabel.getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "rightAction");
 		fighterLabel.getActionMap().put("rightAction", rightAction);
 		
+		bulletRoundPanel.getInputMap().put(KeyStroke.getKeyStroke("UP"), "upAction");
+		bulletRoundPanel.getActionMap().put("upAction", upAction);
+		
 		this.add(fighterLabel);
 		this.add(enemy1Label);
 		this.add(enemy2Label);
 		this.add(enemy3Label);
+		this.add(bulletRoundPanel);
 		
 		this.setTitle("Galaga Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,17 +84,7 @@ public class Frame extends JFrame{
 		
 		moveEnemies();
 	}
-
-	public class LeftAction extends AbstractAction{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			fighterLabel.setLocation(fighterLabel.getX()-10, fighterLabel.getY());
-			
-		}
-		
-	}
+	
 	//This function constantly moves the enemies downwards
 	public void moveEnemies() {
 		while(true) {
@@ -97,15 +100,54 @@ public class Frame extends JFrame{
 			enemy3Label.setLocation(enemy3Label.getX(), enemy3Label.getY()+10);
 		}
 	}
+	
+//	public void moveBullets() {
+//		while(true) {
+//			try {
+//				Thread.sleep(200);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		bulletRoundPanel.setLocation(bulletRoundPanel.getX(),
+//				bulletRoundPanel.getY()-10);
+//			
+//		}
+//	}
+
+	// LEFT and RIGHT Action classes move the players 
+	public class LeftAction extends AbstractAction{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			fighterLabel.setLocation(fighterLabel.getX()-10, 
+					fighterLabel.getY());
+			
+		}
+		
+	}
 
 	public class RightAction extends AbstractAction{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			fighterLabel.setLocation(fighterLabel.getX()+10, fighterLabel.getY());
+			fighterLabel.setLocation(fighterLabel.getX()+10, 
+					fighterLabel.getY());
 		}
 		
+	}
+	public class UpAction extends AbstractAction{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			bulletRoundPanel.setLocation(bulletRoundPanel.getX(), 
+					bulletRoundPanel.getY()-10);
+			
+		}
 	}
 
 }
